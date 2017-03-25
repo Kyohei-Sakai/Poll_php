@@ -23,7 +23,6 @@ class Poll {
       $_SESSION['token'] !== $_POST['token']
     ) {
       throw new \Exception('invalid token!');
-
     }
   }
 
@@ -53,10 +52,24 @@ class Poll {
     ]
     */
 
-    $sql = "select answer, count(id) as c from answers group by answer";
+    $sql = "select answer, count(id) as count from answers group by answer";
     foreach ($this->_db->query($sql) as $row) {
-      $data[$row['answer']] = (int)$row['c'];
+      $data[$row['answer']] = (int)$row['count'];
     }
+    return $data;
+  }
+
+  public function getSexRate() {
+    $data = [
+      'male' => 0,
+      'female' => 0
+    ];
+
+    $sql = "select sex, count(sex) as count from answers group by sex";
+    foreach ($this->_db->query($sql) as $row) {
+      $data[$row['sex']] = (int)$row['count'];
+    }
+
     return $data;
   }
 
@@ -84,12 +97,13 @@ class Poll {
   private function _save()
   {
     $sql =  "insert into answers
-      (answer, created, remote_addr, user_agent, answer_date)
-      values (:answer, now(), :remote_addr, :user_agent, now())";
+      (answer, created, remote_addr, user_agent, answer_date, sex)
+      values (:answer, now(), :remote_addr, :user_agent, now(), :sex)";
     $stmt = $this->_db->prepare($sql);
     $stmt->bindValue(':answer', (int)$_POST['answer'], \PDO::PARAM_INT);
     $stmt->bindValue(':remote_addr', $_SERVER['REMOTE_ADDR'], \PDO::PARAM_STR);
     $stmt->bindValue(':user_agent', $_SERVER['HTTP_USER_AGENT'], \PDO::PARAM_STR);
+    $stmt->bindValue(':sex', $_POST['sex'], \PDO::PARAM_STR);
 
     try {
       $stmt->execute();

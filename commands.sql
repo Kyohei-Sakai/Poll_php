@@ -14,13 +14,21 @@ create table answers (
   remote_addr varchar(15),
   user_agent varchar(255),
   answer_date date,
-  unique unique_answer(remote_addr, user_agent, answer_date)
+  unique unique_answer(remote_addr, user_agent, answer_date),
+  sex enum('male', 'female')
 );
 
+
+-- insert
+insert into answers (answer, created, remote_addr, user_agent, answer_date, sex)
+values (0, now(), 'aaa', 'BBB', now(), 'male');
+insert into answers (answer, created, remote_addr, user_agent, answer_date, sex)
+values (0, now(), 'bbb', 'DDD', now(), 'female');
+insert into answers (answer, created, remote_addr, user_agent, answer_date, sex)
+values (1, now(), 'ccc', 'KKK', now(), 'female');
+
+
+-- select
 select * from answers;
-
-
-insert into answers (answer, created, remote_addr, user_agent, answer_date)
-values (0, now(), 'aaa', 'BBB', now());
-insert into answers (answer, created, remote_addr, user_agent, answer_date)
-values (1, now(), 'ccc', 'KKK', now());
+select answer, count(id) as count from answers group by answer;
+select answer, sex, count(sex) as count from answers group by sex, answer;

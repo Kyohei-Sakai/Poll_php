@@ -37,6 +37,11 @@ $err = $poll->getError();
       <input type="hidden" id="answer" name="answer" value="">
       <input type="hidden" name="token" value="<?= h($_SESSION['token']); ?>">
     </div>
+    <div class="sex">
+      <div class="checkbox checked" id="sex_male" data-sex="male">Male</div>
+      <div class="checkbox" id="sex_female" data-sex="female">Female</div>
+      <input type="hidden" id="sex" name="sex" value="male">
+    </div>
     <div id="btn">Vote and See Results</div>
   </form>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -59,6 +64,12 @@ $err = $poll->getError();
     });
 
     $('.error').fadeOut(3000);
+
+    $('.checkbox').on('click', function() {
+      $('.checkbox').removeClass('checked');
+      $(this).addClass('checked');
+      $('#sex').val($(this).data('sex'));
+    });
 
   });
   </script>

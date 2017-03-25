@@ -60,3 +60,49 @@ h1 {
   padding: 7px;
   color: #fff;
 }
+
+.sex {
+  margin-bottom: 15px;
+}
+
+.checkbox {
+  display: inline-block;
+  width: 70px;
+  padding: 7px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px;
+  background: red;
+  color: #fff;
+  opacity: 0.5;
+}
+
+.checked {
+  opacity: 1.0;
+}
+
+.rate {
+  margin-bottom: 15px;
+}
+
+#rate_male {
+  display: inline-block;
+  width: 100px;
+  background: blue;
+  padding: 7px;
+  font-size: 14px;
+  color: #fff;
+}
+
+#rate_female {
+  display: inline-block;
+  width: 100px;
+  background: red;
+  padding: 7px;
+  font-size: 14px;
+  color: #fff;
+}
+
+/*.rate_male + .rate_female {
+  margin-left: 0;
+}*/
